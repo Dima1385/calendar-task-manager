@@ -44,7 +44,7 @@ npm run dev
 
 Environment Variables
 
-Create `server/.env` (already included with defaults):
+Create `server/.env`:
 
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/calendar-task-manager
