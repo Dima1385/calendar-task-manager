@@ -28,6 +28,8 @@ import {
   Grid,
   WeekdayHeader,
   LoadingBar,
+  ViewToggle,
+  ViewToggleButton,
 } from "./styles.js";
 
 export const Calendar: React.FC = () => {
@@ -36,9 +38,12 @@ export const Calendar: React.FC = () => {
     month,
     days,
     dateRange,
-    goToPrevMonth,
-    goToNextMonth,
+    viewMode,
+    title: weekTitle,
+    goToPrev,
+    goToNext,
     goToToday,
+    switchView,
   } = useCalendar();
 
   const { tasks, loading, addTask, editTask, removeTask, reorderTasks, tasksByDate } =
@@ -87,17 +92,23 @@ export const Calendar: React.FC = () => {
     [editTask]
   );
 
+  const headerTitle =
+    viewMode === "week" && weekTitle
+      ? weekTitle
+      : `${getMonthName(month)} ${year}`;
+
+  const navLabel =
+    viewMode === "week" ? "week" : "month";
+
   return (
     <CalendarWrapper>
       <Header>
         <HeaderLeft>
-          <NavButton onClick={goToPrevMonth} aria-label="Previous month">
+          <NavButton onClick={goToPrev} aria-label={`Previous ${navLabel}`}>
             &#9664;
           </NavButton>
-          <MonthTitle>
-            {getMonthName(month)} {year}
-          </MonthTitle>
-          <NavButton onClick={goToNextMonth} aria-label="Next month">
+          <MonthTitle>{headerTitle}</MonthTitle>
+          <NavButton onClick={goToNext} aria-label={`Next ${navLabel}`}>
             &#9654;
           </NavButton>
           <TodayButton onClick={goToToday}>Today</TodayButton>
@@ -108,6 +119,20 @@ export const Calendar: React.FC = () => {
             onChange={setSearchQuery}
             resultCount={searchResultCount}
           />
+          <ViewToggle>
+            <ViewToggleButton
+              $active={viewMode === "week"}
+              onClick={() => switchView("week")}
+            >
+              Week
+            </ViewToggleButton>
+            <ViewToggleButton
+              $active={viewMode === "month"}
+              onClick={() => switchView("month")}
+            >
+              Month
+            </ViewToggleButton>
+          </ViewToggle>
           <CountrySelect
             value={countryCode}
             onChange={(e) => setCountryCode(e.target.value)}
@@ -141,6 +166,7 @@ export const Calendar: React.FC = () => {
               tasks={tasksByDate.get(day.date) ?? []}
               holidays={getHolidaysForDate(day.date)}
               searchQuery={searchQuery}
+              isWeekView={viewMode === "week"}
               onAddTask={handleAddTask}
               onEditTask={handleEditTask}
               onDeleteTask={removeTask}

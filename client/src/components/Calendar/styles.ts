@@ -78,6 +78,32 @@ export const HeaderRight = styled.div`
   gap: ${({ theme }) => theme.spacing.md};
 `;
 
+
+
+export const ViewToggle = styled.div`
+  display: flex;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.md};
+  overflow: hidden;
+`;
+
+export const ViewToggleButton = styled.button<{ $active: boolean }>`
+  padding: 7px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: none;
+  transition: all 0.15s ease;
+  background: ${({ theme, $active }) =>
+    $active ? theme.colors.text : theme.colors.surface};
+  color: ${({ theme, $active }) =>
+    $active ? "#fff" : theme.colors.textSecondary};
+
+  &:hover {
+    background: ${({ theme, $active }) =>
+      $active ? theme.colors.text : theme.colors.surfaceHover};
+  }
+`;
+
 export const CountrySelect = styled.select`
   padding: 8px 12px;
   border: 1px solid ${({ theme }) => theme.colors.border};
@@ -129,6 +155,7 @@ export const CellContainer = styled.div<{
   $isCurrentMonth: boolean;
   $isToday: boolean;
   $isDragOver: boolean;
+  $isWeekView?: boolean;
 }>`
   background: ${({ theme, $isCurrentMonth, $isToday, $isDragOver }) => {
     if ($isDragOver) return "#f0f7ff";
@@ -136,7 +163,7 @@ export const CellContainer = styled.div<{
     if (!$isCurrentMonth) return "#f8f9fa";
     return theme.colors.surface;
   }};
-  min-height: 130px;
+  min-height: ${({ $isWeekView }) => ($isWeekView ? "180px" : "130px")};
   padding: 6px 8px 8px;
   display: flex;
   flex-direction: column;

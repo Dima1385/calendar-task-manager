@@ -60,3 +60,25 @@ export function getMonthName(month: number): string {
 }
 
 export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+export function getWeekDays(baseDate: Date): CalendarDay[] {
+  const today = new Date();
+  const todayStr = formatDate(today);
+
+  const dayOfWeek = baseDate.getDay();
+  const sunday = new Date(baseDate);
+  sunday.setDate(baseDate.getDate() - dayOfWeek);
+
+  const days: CalendarDay[] = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(sunday);
+    d.setDate(sunday.getDate() + i);
+    days.push({
+      date: formatDate(d),
+      dayOfMonth: d.getDate(),
+      isCurrentMonth: true,
+      isToday: formatDate(d) === todayStr,
+    });
+  }
+  return days;
+}

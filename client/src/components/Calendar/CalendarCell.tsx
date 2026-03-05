@@ -22,6 +22,7 @@ interface Props {
   tasks: Task[];
   holidays: Holiday[];
   searchQuery: string;
+  isWeekView?: boolean;
   onAddTask: (title: string, date: string, labels: string[]) => void;
   onEditTask: (id: string, title: string) => void;
   onDeleteTask: (id: string) => void;
@@ -32,6 +33,7 @@ export const CalendarCell: React.FC<Props> = ({
   tasks,
   holidays,
   searchQuery,
+  isWeekView = false,
   onAddTask,
   onEditTask,
   onDeleteTask,
@@ -63,6 +65,7 @@ export const CalendarCell: React.FC<Props> = ({
       $isCurrentMonth={day.isCurrentMonth}
       $isToday={day.isToday}
       $isDragOver={isOver}
+      $isWeekView={isWeekView}
     >
       <DayHeader>
         <DayNumber $isToday={day.isToday} $isCurrentMonth={day.isCurrentMonth}>
