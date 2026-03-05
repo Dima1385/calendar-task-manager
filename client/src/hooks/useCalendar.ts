@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import { getCalendarDays, getWeekDays, formatDate } from "../utils/date.js";
+import { getCalendarDays, getWeekDays } from "../utils/date.js";
 import { CalendarDay } from "../types/index.js";
 
 export type ViewMode = "month" | "week";
