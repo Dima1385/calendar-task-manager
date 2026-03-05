@@ -24,7 +24,7 @@ API - [Nager.Date](https://date.nager.at/swagger/index.html)
 
 Prerequisites
 - **Node.js** >= 18
-- **MongoDB** running locally on `mongodb://localhost:27017`
+- **MongoDB** running locally 
 
 
 Getting Started
